@@ -207,9 +207,12 @@ class Resources extends Array
       # string.
       secure = url.protocol == "https:"
       url.port ||= if secure then 443 else 80
-      client = HTTP.createClient(url.port, url.hostname, secure)
-      request = client.request(method, "#{url.pathname}#{url.search || ""}", headers)
-
+      try
+        client = HTTP.createClient(url.port, url.hostname, secure)
+        request = client.request(method, "#{url.pathname}#{url.search || ""}", headers)
+      catch ex
+        console.log "error fetching url #{url}"
+        console.log "error: #{ex} #{ex.stack}"
       # First request has not resource, so create it and add to
       # Resources.  After redirect, we have a resource we're using.
       unless resource
