@@ -19,6 +19,7 @@ partial = (text, length = 250)->
   return text if text.length <= length
   return text.substring(0, length - 3) + "..."
 indent = (text)->
+  text = text || ""
   text.toString().split("\n").map((l)-> "  #{l}").join("\n")
 
 
